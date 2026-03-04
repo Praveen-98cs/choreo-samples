@@ -1,7 +1,9 @@
 import ballerina/http;
 import ballerina/io;
 
-service / on new http:Listener(8090) {
+configurable int port = 3000;
+
+service / on new http:Listener(port) {
     resource function post .(http:Request req, @http:Header {name: "x-request-id"} string? xRequestId, @http:Payload string textMsg) returns json|error {
         if xRequestId is string {
             io:println("x-request-id: ", xRequestId);

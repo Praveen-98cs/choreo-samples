@@ -1,8 +1,12 @@
-version: 0.1
-
+schemaVersion: "1.2"
 endpoints:
-- name: Go Echo Service
-  port: 9090
-  type: REST
-  networkVisibility: Public
-  context: /
+    - name: go-echo-service-803
+      displayName: Go Echo Service
+      service:
+        basePath: /
+        port: 9090
+      type: REST
+      networkVisibilities:
+        - Project
+        - Public
+        - Organization

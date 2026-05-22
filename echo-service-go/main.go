@@ -51,14 +51,12 @@ func main() {
 }
 
 func echoHandler(w http.ResponseWriter, r *http.Request) {
-	xRequestId := r.Header.Get("x-request-id")
-	if xRequestId != "" {
-		fmt.Printf("x-request-id: %s\n", xRequestId)
-	}
-
 	headers := make(map[string][]string)
 	for name, values := range r.Header {
 		headers[name] = values
+		for _, value := range values {
+			log.Printf("%s: %s", name, value)
+		}
 	}
 
 	var payload string

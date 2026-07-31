@@ -1,0 +1,200 @@
+openapi: 3.1.0
+info:
+  title: Go Echo Service API
+  description: |
+    A simple echo service that returns request headers and payload. Supports GET for a fixed payload and POST for echoing the request body.
+  version: 1.0.0
+servers:
+  - url: http://localhost:9090
+    description: Local development server
+paths:
+  /:
+    get:
+      summary: Echo GET request
+      description: Returns the received request headers and a fixed GET payload.
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Optional request identifier.
+          required: false
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Optional language preference.
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Optional JWT token for logging/authentication.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Echo response containing headers and payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchoResponse'
+    post:
+      summary: Echo POST request body
+      description: Reads and returns the request body as the payload.
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Optional request identifier.
+          required: false
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Optional language preference.
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Optional JWT token for logging/authentication.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        description: Request body to echo.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+          text/plain:
+            schema:
+              type: string
+          application/octet-stream:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Echo response containing headers and the request body payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchoResponse'
+    put:
+      summary: Echo PUT request body
+      description: Reads and returns the request body as the payload.
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Optional request identifier.
+          required: false
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Optional language preference.
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Optional JWT token for logging/authentication.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        description: Request body to echo.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+          text/plain:
+            schema:
+              type: string
+          application/octet-stream:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Echo response containing headers and the request body payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchoResponse'
+    delete:
+      summary: Echo DELETE request
+      description: Returns the received request headers and a fixed payload for non-GET/POST methods.
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Optional request identifier.
+          required: false
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Optional language preference.
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Optional JWT token for logging/authentication.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Echo response containing headers and the generic payload for other methods.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchoResponse'
+    patch:
+      summary: Echo PATCH request
+      description: Returns the received request headers and a fixed payload for non-GET/POST methods.
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Optional request identifier.
+          required: false
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Optional language preference.
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Optional JWT token for logging/authentication.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Echo response containing headers and the generic payload for other methods.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchoResponse'
+components:
+  schemas:
+    EchoResponse:
+      type: object
+      properties:
+        headers:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Map of request header names to their values.
+        payload:
+          type: string
+          description: The echoed payload or fixed method-specific payload.
+      required:
+        - headers
+        - payload
